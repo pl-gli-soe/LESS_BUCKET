@@ -12,9 +12,11 @@ Private aItem As Outlook.AppointmentItem
 Private mailItem As Outlook.mailItem
 
 
+Private str_to As String
 Private str_body As String
 Private str_title As String
 Private str_script As String
+
 
 Private Sub Class_Initialize()
     Set o = New Outlook.Application
@@ -33,6 +35,10 @@ End Sub
 
 Public Sub set_str_script(s As String)
     str_script = CStr(s)
+End Sub
+
+Public Sub set_str_to(s As String)
+    str_to = CStr(s)
 End Sub
 
 
@@ -56,7 +62,16 @@ Public Sub save_html_item()
             "</head>" & _
             "<body>" & str_body & "</body></html>"
         .BodyFormat = olFormatHTML
-        .To = "please provide distribution list..."
+        .To = str_to & CStr(BUCKET.TO_TXT)
+        
+        
+        ' attaching files
+        ' ==================================================
+        
+        
+        ' ==================================================
+        
+        
         .Save
         
         ' .Display

@@ -50,8 +50,10 @@ End Sub
 
 
 
-Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_MANDATORY_COLUMNS, twoj_deck As String)
+Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_MANDATORY_COLUMNS, twoj_deck As String, dns As String)
 
+
+    ' dns jako dodatkowy filter zatem jesli jest pusty to znaczy ze filtru nie ma
     
     For Each w In Workbooks
         If w.name = Me.nazwa_aktywnego_pliku Then
@@ -65,8 +67,8 @@ Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_
     
         ' wizard jest podlaczony
         ' pobierz arkusz master
-        Set master = wizard_w.Sheets(o.MASTER_SH_NAME)
-        Set details = wizard_w.Sheets(o.DETAILS_SH_NAME)
+        Set master = wizard_w.Sheets(BUCKET.MASTER_SH_NAME)
+        Set details = wizard_w.Sheets(BUCKET.DETAILS_SH_NAME)
         
         
         ' teraz lecimy z uzupelnieniem kolekcji orderow
@@ -77,28 +79,28 @@ Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_
         
         Do
         
-        
-            If r.Offset(0, o.fup_code - 1) = twoj_deck Then
-        
-                If orders.Exists(CStr(r.Offset(0, o.duns - 1))) Then
-                
-                
+            If r.Offset(0, BUCKET.duns - 1) Like "*" & CStr(dns) & "*" Then
+                If r.Offset(0, BUCKET.fup_code - 1) = twoj_deck Then
+            
+                    If orders.Exists(CStr(r.Offset(0, BUCKET.duns - 1))) Then
                     
-                
-                    Set order_handler = orders(CStr(r.Offset(0, o.duns - 1)))
+                        Set order_handler = orders(CStr(r.Offset(0, BUCKET.duns - 1)))
+                        order_handler.try_to_add_new_pn CStr(r.Offset(0, BUCKET.pn - 1)), CStr(r.Offset(0, BUCKET.PN_Name - 1)), CLng(r.Offset(0, e - 1))
+                    Else
                     
-                    
-                    order_handler.try_to_add_new_pn CStr(r.Offset(0, o.pn - 1)), CStr(r.Offset(0, o.PN_Name - 1)), CLng(r.Offset(0, e - 1))
-                Else
-                    Set order_handler = New OrderHandler
-                    With order_handler
-                        .set_name CStr(r.Offset(0, o.Supplier_Name - 1)), CStr(r.Offset(0, o.duns - 1))
-                        .try_to_add_new_pn CStr(r.Offset(0, o.pn - 1)), CStr(r.Offset(0, o.PN_Name - 1)), CLng(r.Offset(0, e - 1))
-                    End With
-                    orders.Add CStr(r.Offset(0, o.duns - 1)), order_handler
+                        Set order_handler = New OrderHandler
+                        
+                        With order_handler
+                            .set_name CStr(r.Offset(0, BUCKET.Supplier_Name - 1)), CStr(r.Offset(0, BUCKET.duns - 1))
+                            .try_to_add_new_pn CStr(r.Offset(0, BUCKET.pn - 1)), CStr(r.Offset(0, BUCKET.PN_Name - 1)), CLng(r.Offset(0, e - 1))
+                        End With
+                        orders.Add CStr(r.Offset(0, BUCKET.duns - 1)), order_handler
+                    End If
                 End If
             End If
+            
             Set r = r.Offset(1, 0)
+        
         Loop Until Trim(r) = ""
         
         
@@ -124,6 +126,9 @@ Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_
             nh.init "start", "div", "main", ""
             
             With nh
+            
+                .add_node "fh", "div", "firsth", "font-size:26px;", CStr(BUCKET.FIRST_HEADING)
+            
                 .add_node "gen_info", "div", "gi", "font-size:20px;", CStr(ThisWorkbook.Sheets("info").Range("A1"))
                 .add_node "gen_ops", "div", "go", "font-size:14px;", CStr(ThisWorkbook.Sheets("info").Range("A1").Offset(1, 1))
                 
@@ -139,6 +144,7 @@ Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_
             End With
             
             With oh
+                .set_str_to CStr(order_handler.get_name)
                 .set_str_script ""
                 .set_str_body CStr(nh.to_string)
             End With
@@ -160,10 +166,10 @@ End Sub
 
 Private Sub reassign_txt_on_info_sheet()
 
-    ThisWorkbook.Sheets("info").Range("A1").Offset(1, 1).Value = o.DESC_TXT
-    ThisWorkbook.Sheets("info").Range("A3").Offset(1, 1).Value = o.DESC_TXT
-    ThisWorkbook.Sheets("info").Range("A5").Offset(1, 1).Value = o.DESC_TXT
-    ThisWorkbook.Sheets("info").Range("A7").Offset(1, 1).Value = o.DESC_TXT
+    ThisWorkbook.Sheets("info").Range("A1").Offset(1, 1).Value = BUCKET.DESC_TXT
+    ThisWorkbook.Sheets("info").Range("A3").Offset(1, 1).Value = BUCKET.DESC_TXT
+    ThisWorkbook.Sheets("info").Range("A5").Offset(1, 1).Value = BUCKET.DESC_TXT
+    ThisWorkbook.Sheets("info").Range("A7").Offset(1, 1).Value = BUCKET.DESC_TXT
 End Sub
 
 
