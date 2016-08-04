@@ -1,11 +1,8 @@
 Attribute VB_Name = "MainModule"
-Global Const MASTER_SH_NAME = "MASTER"
-Global Const DETAILS_SH_NAME = "DETAILS"
-
 Public Sub main()
 
     
-    With o.WybierzPlikForm
+    With BUCKET.WybierzPlikForm
         .ListBox1.Clear
         .ComboBox1.Clear
         

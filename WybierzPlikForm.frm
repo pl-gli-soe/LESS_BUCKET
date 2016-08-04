@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} WybierzPlikForm 
    Caption         =   "Wybierz Plik typu Wizard"
-   ClientHeight    =   4545
+   ClientHeight    =   5175
    ClientLeft      =   45
    ClientTop       =   375
    ClientWidth     =   3810
@@ -80,7 +80,7 @@ Private Sub inner_run()
                 ee = MRD2_Ordered_QTY
             End If
                 
-            wh.uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie ee, CStr(Me.TextBox1)
+            wh.uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie ee, CStr(Me.TextBox1), CStr(Me.TextBoxDUNS)
         End If
         
         
