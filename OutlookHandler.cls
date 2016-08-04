@@ -18,6 +18,16 @@ Private str_title As String
 Private str_script As String
 
 
+Private w As Workbook
+Private sh As Worksheet
+Private source_sh As Worksheet
+
+
+Private wordh As WordHandler
+Private my_shape As Excel.Shape
+
+
+
 Private Sub Class_Initialize()
     Set o = New Outlook.Application
     
@@ -62,17 +72,102 @@ Public Sub save_html_item()
             "</head>" & _
             "<body>" & str_body & "</body></html>"
         .BodyFormat = olFormatHTML
-        .To = str_to & CStr(BUCKET.TO_TXT)
+        .To = CStr(BUCKET.TO_TXT)
         
         
         ' attaching files
         ' ==================================================
         
         
+        ' LABELKA
+        ' ---------------------------------------------------------------------
+        
+        Set w = Workbooks.Add
+        Set source_sh = ThisWorkbook.Sheets(BUCKET.LABEL_SH_NAME)
+        source_sh.Copy Before:=w.Sheets(1)
+        
+        Application.DisplayAlerts = False
+        w.SaveAs ThisWorkbook.Path & Application.PathSeparator & CStr(BUCKET.LABEL_SH_NAME), 51, , , , , , xlLocalSessionChanges
+        Application.DisplayAlerts = True
+        
+        
+        .Attachments.Add w.FullName
+        w.Close False
+        
+        ' ---------------------------------------------------------------------
+        
+        ' excel - survey
+        ' ---------------------------------------------------------------------
+        
+        Set w = Workbooks.Add
+        Set source_sh = ThisWorkbook.Sheets(BUCKET.SURVEY_SH_NAME)
+        source_sh.Copy Before:=w.Sheets(1)
+        
+        Application.DisplayAlerts = False
+        w.SaveAs ThisWorkbook.Path & Application.PathSeparator & CStr(BUCKET.SURVEY_SH_NAME), 51, , , , , , xlLocalSessionChanges
+        Application.DisplayAlerts = True
+        
+        
+        .Attachments.Add w.FullName
+        w.Close False
+        
+        ' ---------------------------------------------------------------------
+        
+        
+        
+        
+        ' word - del conf
+        ' ---------------------------------------------------------------------
+        
+        Set source_sh = ThisWorkbook.Sheets(BUCKET.DEL_CONF_SH_NAME)
+        Set my_shape = source_sh.Shapes(1)
+        
+        Set wordh = New WordHandler
+        wordh.connect_shape_with_new_doc my_shape, DOC_DEL_CONF
+        
+        .Attachments.Add wordh.getfullname()
+        Set wordh = Nothing
+        ' ---------------------------------------------------------------------
+        
+        
+        
+        ' word - guide
+        ' ---------------------------------------------------------------------
+        
+        Set source_sh = ThisWorkbook.Sheets(BUCKET.GUIDE_SH_NAME)
+        Set my_shape = source_sh.Shapes(1)
+        
+        Set wordh = New WordHandler
+        wordh.connect_shape_with_new_doc my_shape, DOC_GUIDE
+        
+        .Attachments.Add wordh.getfullname()
+        Set wordh = Nothing
+        ' ---------------------------------------------------------------------
+        
+        
+        ' word - part order conf
+        ' ---------------------------------------------------------------------
+        
+        Set source_sh = ThisWorkbook.Sheets(BUCKET.PART_ORDER_CONF_SH_NAME)
+        Set my_shape = source_sh.Shapes(1)
+        
+        Set wordh = New WordHandler
+        wordh.connect_shape_with_new_doc my_shape, DOC_PART_ORDER_CONF
+        
+        .Attachments.Add wordh.getfullname()
+        Set wordh = Nothing
+        ' ---------------------------------------------------------------------
+        
+        
+        
+        
         ' ==================================================
         
         
         .Save
+        
+        
+        
         
         ' .Display
     End With

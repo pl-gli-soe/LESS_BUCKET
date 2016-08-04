@@ -74,3 +74,10 @@ Public Enum E_MASTER_MANDATORY_COLUMNS
     BLANK3
     BLANK4
 End Enum
+
+
+Public Enum E_DOCS
+    DOC_GUIDE = 1
+    DOC_DEL_CONF
+    DOC_PART_ORDER_CONF
+End Enum
