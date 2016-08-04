@@ -20,6 +20,153 @@ Private pre As String
 Private post As String
 
 
+Public Sub init_with_embed_word(nm As String, m As String, Optional ajdi As String, Optional stajl As String, Optional body As Object)
+
+    name = nm
+    If Len(m) > 0 Then
+    
+    
+        ' tutaj bardzo wazne styl nie moze zostac uruchomiony bez przypisania id
+        If Len(ajdi) > 0 Then
+            pre = "<" & CStr(m) & _
+                " id=" & Chr(34) & CStr(ajdi) & Chr(34) & _
+                " style=" & Chr(34) & CStr(stajl) & Chr(34) & " > "
+        Else
+            pre = "<" & CStr(m) & ">"
+        End If
+        post = "</" & CStr(m) & ">"
+    Else
+        pre = ""
+        post = ""
+    End If
+    
+    
+    tmp = CStr(parse_to_txt_from_embedobject(body))
+    If Len(tmp) > 0 Then
+        str_body = CStr(tmp)
+    End If
+End Sub
+
+Private Function parse_to_txt_from_embedobject(Optional b As Object) As String
+    parse_to_txt_from_embedobject = ""
+    
+    If Not IsMissing(b) Then
+        
+        
+        ' sekcja sciagania textu z obiektu embed
+        ' ======================================
+        ''
+        '
+        
+        ' ok teraz by trzeba bylo znalezc mozliwosc wyciagniecia textu z tego obiektu
+        ' -----------------------------------------------------------------------------
+        Dim sr As Excel.ShapeRange
+        Dim s As Excel.Shape
+        
+        ' Debug.Print TypeName(b) ' ShapeRange
+        Set sr = b
+        ' Debug.Print sr.AutoShapeType ' -2
+        If sr.Type = msoEmbeddedOLEObject Then
+            ' Debug.Print "this is mso embed ole object" ' true
+            ' ==================================================
+            ''
+            '
+            
+            Set s = sr.Item(1)
+            'Debug.Print s.name
+            'Debug.Print TypeName(s.OLEFormat.Object)
+            
+            s.OLEFormat.Verb xlOpen
+            
+            Dim doc As Word.Document
+            Dim docs As Word.Documents
+            Dim app As Word.Application
+            Dim data_object As MSForms.DataObject
+            
+        
+            Set app = Nothing
+            Do
+                Set app = GetObject(, "Word.Application")
+            Loop While app Is Nothing
+            
+            
+            ' sekcja wyciagniecia tekstu z pliku
+            ' =======================================
+            
+            ' przypominam ze txt trzeba wrzucic:
+            ' parse_to_txt_from_embedobject
+            ' ----------------------------------------------
+            ''
+            '
+            Set docs = app.Documents
+            Set doc = docs(1)
+            
+            
+            
+            Dim rr As Range
+            
+            
+            Dim p As Word.Paragraph
+            ' MsgBox .Paragraphs(1).Range.Text
+            With doc
+                For Each p In .Paragraphs
+                    ' MsgBox p.Range.text
+                    
+                    
+                    
+                    
+                    'Set rr = ThisWorkbook.Sheets(BUCKET.REGISTER_SH_NM).Range("A1")
+                    'rr.PasteSpecial xlPasteAll
+                    
+                    tmp_txt = tmp_txt & "<br/>" & CStr(fnConvert2HTML(p.Range))
+                    
+                    
+                Next p
+                
+            End With
+            '
+            ''
+            ' ----------------------------------------------
+            
+            ' =======================================
+            
+            doc.Close False
+            
+            If Not app Is Nothing Then
+                Application.DisplayAlerts = False
+                app.Quit False
+                Application.DisplayAlerts = True
+            End If
+            
+            
+            parse_to_txt_from_embedobject = tmp_txt
+            
+            
+            
+            ' teoretycznie udalo mi sie zlinkowac obiekt typu word
+            ' teraz sekcja pracy na tekscie i odopowiednie przekopiowanie go do formatu html,
+            ' ktory bedzie uzyteczny z perspektywy maila (kolory, rozmiar czcionki itd)
+            ' -----------------------------------------------------------------------------------
+            
+            
+            ' -----------------------------------------------------------------------------------
+            
+            '
+            ''
+            ' ==================================================
+        End If
+        
+        
+        ' -----------------------------------------------------------------------------
+        
+        '
+        ''
+        ' ======================================
+    End If
+    
+End Function
+
+
 Public Sub init(nm As String, m As String, Optional ajdi As String, Optional stajl As String, Optional body As String)
 
     name = nm
@@ -61,6 +208,13 @@ Public Sub add_node(nm As String, m As String, Optional ajdi As String, Optional
     inner_add_node n
 End Sub
 
+Public Sub add_node_with_embed_word(nm As String, m As String, Optional ajdi As String, Optional stajl As String, Optional body As Object)
+    Set n = New HtmlNode
+    n.init_with_embed_word nm, m, ajdi, stajl, body
+    inner_nodes.Add n
+End Sub
+
+
 
 Private Sub inner_add_node(n As HtmlNode)
 
@@ -83,9 +237,9 @@ Public Function to_string() As String
     
     to_string = ""
     
-    tmp = CStr(pre) & "<br/>" & _
-        str_body & "<br/>" & _
-        get_string_from_collection() & "<br/>" & CStr(post)
+    tmp = CStr(pre) & _
+        str_body & _
+        get_string_from_collection() & CStr(post) & "<br/>"
     
     to_string = CStr(tmp)
 End Function

@@ -18,13 +18,13 @@ Private pns_nm As Dictionary
 
 Public Function orders_to_string() As String
     
-    tmp = "<table style=" & Chr(34) & "border: 2px solid black; width: 300px; border-collapse: collapse;" & Chr(34) & ">" & Chr(10)
+    tmp = "<table style=" & Chr(34) & "border: 2px solid black; width: 800px; border-collapse: collapse;" & Chr(34) & ">" & Chr(10)
     
     tmp = tmp & "<tr style=" & Chr(34) & "border: 1px solid black;" & Chr(34) & ">" & Chr(10)
         
-        tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 10px;" & Chr(34) & ">" & "Part Number" & "</th>" & Chr(10)
-        tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 10px;" & Chr(34) & ">" & "Part Name" & "</th>" & Chr(10)
-        tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 10px;" & Chr(34) & ">" & "Qty" & "</th>" & Chr(10)
+        tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 4px;" & Chr(34) & ">" & "Part Number" & "</th>" & Chr(10)
+        tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 4px;" & Chr(34) & ">" & "Part Name" & "</th>" & Chr(10)
+        tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 4px;" & Chr(34) & ">" & "Qty" & "</th>" & Chr(10)
     
     tmp = tmp & "</tr>"
     
@@ -35,9 +35,9 @@ Public Function orders_to_string() As String
     
         tmp = tmp & "<tr style=" & Chr(34) & "border: 1px solid black;" & Chr(34) & ">" & Chr(10)
         
-            tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 10px;" & Chr(34) & ">" & xkey & "</th>" & Chr(10)
-            tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 10px;" & Chr(34) & ">" & pns_nm(xkey) & "</th>" & Chr(10)
-            tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 10px;" & Chr(34) & ">" & pns_q(xkey) & "</th>" & Chr(10)
+            tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 2px;" & Chr(34) & ">" & xkey & "</th>" & Chr(10)
+            tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 2px;" & Chr(34) & ">" & pns_nm(xkey) & "</th>" & Chr(10)
+            tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 2px;" & Chr(34) & ">" & pns_q(xkey) & "</th>" & Chr(10)
         
         tmp = tmp & "</tr>"
     Next xkey
