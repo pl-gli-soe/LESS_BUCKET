@@ -260,10 +260,16 @@ Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_
                 oh.table_in_html = CStr(tmp_html_txt_for_table)
                 
                 ' oh.set_str_body CStr(master.Range("A2"))
-                oh.set_str_title CStr(ThisWorkbook.Sheets("info").Range("B1")) & _
-                    " " & CStr(order_handler.get_name) & _
-                    " " & CStr(details.Range("plant")) & _
-                    " " & CStr(details.Range("project")) & _
+                'oh.set_str_title CStr(ThisWorkbook.Sheets("info").Range("B1")) & _
+                '    " " & CStr(order_handler.get_name) & _
+                '    '" " & CStr(details.Range("plant")) & _
+                '    '" " & CStr(details.Range("project")) & _
+                '    " " & CStr(details.Range("faza")) & _
+                '    " " & CStr(details.Range("my"))
+                
+                
+                oh.set_str_title CStr(ThisWorkbook.Sheets("info").Range("B1")) & ", " & _
+                    " " & CStr(order_handler.get_name) & ", " & _
                     " " & CStr(details.Range("faza")) & _
                     " " & CStr(details.Range("my"))
                 

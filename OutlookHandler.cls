@@ -151,14 +151,14 @@ Public Sub save_html_item()
         ' word - part order conf
         ' ---------------------------------------------------------------------
         
-        Set source_sh = ThisWorkbook.Sheets(BUCKET.PART_ORDER_CONF_SH_NAME)
-        Set my_shape = source_sh.Shapes(1)
+        'Set source_sh = ThisWorkbook.Sheets(BUCKET.PART_ORDER_CONF_SH_NAME)
+        'Set my_shape = source_sh.Shapes(1)
         
-        Set wordh = New WordHandler
-        wordh.connect_shape_with_new_doc my_shape, DOC_PART_ORDER_CONF
+        'Set wordh = New WordHandler
+        'wordh.connect_shape_with_new_doc my_shape, DOC_PART_ORDER_CONF
         
-        .Attachments.Add wordh.getfullname()
-        Set wordh = Nothing
+        '.Attachments.Add wordh.getfullname()
+        'Set wordh = Nothing
         ' ---------------------------------------------------------------------
         
         
@@ -172,7 +172,7 @@ Public Sub save_html_item()
         source_sh.Copy Before:=w.Sheets(1)
         
         Application.DisplayAlerts = False
-        w.SaveAs ThisWorkbook.Path & Application.PathSeparator & CStr(BUCKET.MATERIAL_ORDER_SH_NAME), 51, , , , , , xlLocalSessionChanges
+        w.SaveAs ThisWorkbook.Path & Application.PathSeparator & CStr(source_sh.Range("TO")) & " _ORDER", 51, , , , , , xlLocalSessionChanges
         Application.DisplayAlerts = True
         
         
