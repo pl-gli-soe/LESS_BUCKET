@@ -137,6 +137,7 @@ Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_
                             
                             With order_handler
                                 .set_name CStr(r.Offset(0, BUCKET.Supplier_Name - 1)), CStr(r.Offset(0, BUCKET.duns - 1))
+                                .set_info_from_details details
                                 .try_to_add_new_pn CStr(r.Offset(0, BUCKET.pn - 1)), CStr(r.Offset(0, BUCKET.PN_Name - 1)), CLng(r.Offset(0, e - 1))
                             End With
                             orders.Add CStr(r.Offset(0, BUCKET.duns - 1)), order_handler
@@ -160,6 +161,8 @@ Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_
                 
                 ThisWorkbook.Sheets("info").Range("A3").Offset(1, 1) = ""
                 work_with ThisWorkbook.Sheets("info").Range("A3").Offset(1, 1), order_handler
+                Dim tmp_html_txt_for_table As String
+                tmp_html_txt_for_table = CStr(ThisWorkbook.Sheets("info").Range("A3").Offset(1, 1))
                 
                 
                 Set nh = New HtmlNode
@@ -187,7 +190,11 @@ Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_
                     ' =====================================
                     ' =====================================
                     DoEvents
-                    .add_node "tb", "div", "so", "font-size:14px;", CStr(ThisWorkbook.Sheets("info").Range("A3").Offset(1, 1))
+                    If order_handler.how_many_orders() <= G_LIMIT_ORDEROW_JAKO_TABELA_BEZPOSREDNIO_W_TRESCI_MAILA Then
+                        .add_node "tb", "div", "so", "font-size:14px;", CStr(ThisWorkbook.Sheets("info").Range("A3").Offset(1, 1))
+                    Else
+                        ' no operation
+                    End If
                     ' =====================================
                     ' =====================================
                     
@@ -249,6 +256,9 @@ Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_
                 
                 
                 Set oh = New OutlookHandler
+                
+                oh.table_in_html = CStr(tmp_html_txt_for_table)
+                
                 ' oh.set_str_body CStr(master.Range("A2"))
                 oh.set_str_title CStr(ThisWorkbook.Sheets("info").Range("B1")) & _
                     " " & CStr(order_handler.get_name) & _
@@ -295,9 +305,17 @@ End Sub
 
 Private Sub work_with(ByRef ra3 As Range, ByRef orderh As OrderHandler)
 
+
+    ' HTML do jednej komorki
     With orderh
         ' ra3.Value = .get_name()
         ra3.Value = CStr(ra3.Value) & "<br/><br/>"
         ra3.Value = CStr(ra3.Value) & CStr(.orders_to_string())
+    End With
+    
+    
+    ' do arkusza material order
+    With orderh
+        .put_orders_into_excel_worksheet ThisWorkbook.Sheets(BUCKET.MATERIAL_ORDER_SH_NAME)
     End With
 End Sub
