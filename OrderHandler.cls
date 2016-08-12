@@ -10,10 +10,20 @@ Attribute VB_Exposed = False
 Private supp_nm As String
 Private duns As String
 
+Private data_orderu As String
+
+Private mrd As String
+Private proj As String
+Private phase As String
+Private pickup As String
+Private conf_req As String
+
 Private pns_q As Dictionary
 Private pns_nm As Dictionary
 
-
+Public Function how_many_orders() As Long
+    how_many_orders = CLng(pns_q.Count)
+End Function
 
 
 Public Function orders_to_string() As String
@@ -22,6 +32,7 @@ Public Function orders_to_string() As String
     
     tmp = tmp & "<tr style=" & Chr(34) & "border: 1px solid black;" & Chr(34) & ">" & Chr(10)
         
+        tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 4px;" & Chr(34) & ">" & "Pos" & "</th>" & Chr(10)
         tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 4px;" & Chr(34) & ">" & "Part Number" & "</th>" & Chr(10)
         tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 4px;" & Chr(34) & ">" & "Part Name" & "</th>" & Chr(10)
         tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 4px;" & Chr(34) & ">" & "Qty" & "</th>" & Chr(10)
@@ -29,17 +40,20 @@ Public Function orders_to_string() As String
     tmp = tmp & "</tr>"
     
     
-    
+    inc = 1
     
     For Each xkey In pns_q.Keys
     
         tmp = tmp & "<tr style=" & Chr(34) & "border: 1px solid black;" & Chr(34) & ">" & Chr(10)
         
+            tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 2px;" & Chr(34) & ">" & CStr(inc) & "</th>" & Chr(10)
             tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 2px;" & Chr(34) & ">" & xkey & "</th>" & Chr(10)
             tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 2px;" & Chr(34) & ">" & pns_nm(xkey) & "</th>" & Chr(10)
             tmp = tmp & "<th style=" & Chr(34) & "border: 1px solid black; padding: 2px;" & Chr(34) & ">" & pns_q(xkey) & "</th>" & Chr(10)
         
         tmp = tmp & "</tr>"
+        
+        inc = inc + 1
     Next xkey
     
     tmp = tmp & Chr(10) & "</table> <br/><br/>"
@@ -52,6 +66,56 @@ Public Sub set_name(suppnm As String, mduns As String)
     
     supp_nm = CStr(suppnm)
     duns = CStr(mduns)
+End Sub
+
+Public Sub set_info_from_details(d As Worksheet)
+    'Private mrd As Date
+    'Private proj As String
+    'Private phase As String
+    'Private pickup As String
+    'Private conf_req As String
+    
+    'If IsDate(d.Range("mrd_date")) Then
+    '    mrd = CStr(d.Range("mrd_date"))
+    'Else
+    '    mrd = ""
+    'End If
+    
+    proj = CStr(d.Range("project"))
+    phase = CStr(d.Range("faza"))
+    pickup = CStr(d.Range("pickup_date"))
+    mrd = CStr(d.Range("mrd"))
+    data_orderu = CStr(Format(Date, "yyyy-mm-dd"))
+    
+    
+    
+    
+End Sub
+
+
+Public Sub put_orders_into_excel_worksheet(sh As Worksheet)
+
+
+    sh.Range("TO").Value = CStr(supp_nm)
+    sh.Range("SF_DUNS").Value = CStr(duns)
+    sh.Range("ORDER_DATE").Value = CStr(data_orderu)
+    sh.Range("PROJ").Value = CStr(proj)
+    sh.Range("PHASE").Value = CStr(phase)
+    sh.Range("MRD").Value = CStr(mrd)
+    sh.Range("PICKUP_DATE").Value = CStr(pickup)
+    
+    
+    wiersz = 18
+    
+    For Each xkey In pns_q.Keys
+    
+        sh.Cells(wiersz, 1) = wiersz - 17
+        sh.Cells(wiersz, 2) = xkey
+        sh.Cells(wiersz, 3) = pns_nm(xkey)
+        sh.Cells(wiersz, 4) = pns_q(xkey)
+    
+        wiersz = wiersz + 1
+    Next xkey
 End Sub
 
 
@@ -114,6 +178,13 @@ End Sub
 Private Sub Class_Initialize()
     Set pns_q = New Dictionary
     Set pns_nm = New Dictionary
+    
+    mrd = ""
+    proj = ""
+    phase = ""
+    pickup = ""
+    conf_req = ""
+
 End Sub
 
 Private Sub Class_Terminate()

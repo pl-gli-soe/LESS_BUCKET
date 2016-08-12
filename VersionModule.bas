@@ -1,4 +1,19 @@
 Attribute VB_Name = "VersionModule"
+' 2016-08-08
+' BUCKET 0.9 prototype
+' ===========================================================================================
+'
+'
+' Order w postaci order.htm jest nieedytowalny, co nie jest zbyt wygodne.
+' Wersja 0.9 wykorzystuje dodatkowy arkussz material order pod wpisanie w postaci excelowej
+' tabeli zamowien
+' ktora bedzie dostepna zarowno do 10 linii bezposrednio w mailu, ale i pliku zalaczonym do maila.
+'
+'
+' ===========================================================================================
+
+
+
 ' 2016-08-04
 ' BUCKET 0.8 prototype
 '

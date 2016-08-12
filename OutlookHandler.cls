@@ -17,6 +17,9 @@ Private str_body As String
 Private str_title As String
 Private str_script As String
 
+Public table_in_html  As String
+Private fs As Object
+
 
 Private w As Workbook
 Private sh As Worksheet
@@ -31,7 +34,7 @@ Private my_shape As Excel.Shape
 Private Sub Class_Initialize()
     Set o = New Outlook.Application
     
-    
+    table_in_html = ""
 End Sub
 
 
@@ -156,6 +159,42 @@ Public Sub save_html_item()
         
         .Attachments.Add wordh.getfullname()
         Set wordh = Nothing
+        ' ---------------------------------------------------------------------
+        
+        
+        
+        ' ---------------------------------------------------------------------
+        
+        ' order - as excel file.
+        ' ---------------------------------------------------------------------
+        Set w = Workbooks.Add
+        Set source_sh = ThisWorkbook.Sheets(BUCKET.MATERIAL_ORDER_SH_NAME)
+        source_sh.Copy Before:=w.Sheets(1)
+        
+        Application.DisplayAlerts = False
+        w.SaveAs ThisWorkbook.Path & Application.PathSeparator & CStr(BUCKET.MATERIAL_ORDER_SH_NAME), 51, , , , , , xlLocalSessionChanges
+        Application.DisplayAlerts = True
+        
+        
+        .Attachments.Add w.FullName
+        w.Close False
+        ' ---------------------------------------------------------------------
+        
+        
+        
+        ' order as HTM file
+        ' ---------------------------------------------------------------------
+        ' If table_in_html <> "" Then
+        '
+        '     path_with_filename = ThisWorkbook.Path & Application.PathSeparator & "orders.htm"
+        '
+        '     Set fs = CreateObject("Scripting.FileSystemObject")
+        '     Set a = fs.CreateTextFile(path_with_filename, True)
+        '     a.WriteLine CStr(table_in_html)
+        '     a.Close
+        '
+        '     .Attachments.Add path_with_filename
+        ' End If
         ' ---------------------------------------------------------------------
         
         

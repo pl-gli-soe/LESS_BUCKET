@@ -5,7 +5,8 @@ Global Const TO_TXT = "... here should be your distribution list..."
 Global Const MASTER_SH_NAME = "MASTER"
 Global Const DETAILS_SH_NAME = "DETAILS"
 
-
+Global Const _
+    G_LIMIT_ORDEROW_JAKO_TABELA_BEZPOSREDNIO_W_TRESCI_MAILA = 10
 
 
 Global Const INFO_SH_NAME = "info"
@@ -14,6 +15,7 @@ Global Const LABEL_SH_NAME = "label"
 Global Const SURVEY_SH_NAME = "survey"
 Global Const GUIDE_SH_NAME = "GUIDE"
 Global Const PART_ORDER_CONF_SH_NAME = "part order conf"
+Global Const MATERIAL_ORDER_SH_NAME = "material order"
 
 Global Const REGISTER_SH_NM = "register"
 
