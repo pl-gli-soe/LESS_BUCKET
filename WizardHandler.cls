@@ -83,7 +83,7 @@ End Function
 
 
 
-Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_MANDATORY_COLUMNS, twoj_deck As String, dns As String)
+Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_MANDATORY_COLUMNS, twoj_deck As String, dns As String, work_with_visible As Boolean)
 
 
     ' dns jako dodatkowy filter zatem jesli jest pusty to znaczy ze filtru nie ma
@@ -124,23 +124,29 @@ Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_
             
             Do
             
-                If r.Offset(0, BUCKET.duns - 1) Like "*" & CStr(dns) & "*" Then
-                    If r.Offset(0, BUCKET.fup_code - 1) = twoj_deck Then
+                If work_with_visible And r.EntireRow.Hidden Then
+                    ' do nothing
+                    ' ===========
+                Else
                 
-                        If orders.Exists(CStr(r.Offset(0, BUCKET.duns - 1))) Then
-                        
-                            Set order_handler = orders(CStr(r.Offset(0, BUCKET.duns - 1)))
-                            order_handler.try_to_add_new_pn CStr(r.Offset(0, BUCKET.pn - 1)), CStr(r.Offset(0, BUCKET.PN_Name - 1)), CLng(r.Offset(0, e - 1))
-                        Else
-                        
-                            Set order_handler = New OrderHandler
+                    If r.Offset(0, BUCKET.duns - 1) Like "*" & CStr(dns) & "*" Then
+                        If r.Offset(0, BUCKET.fup_code - 1) = twoj_deck Then
+                    
+                            If orders.Exists(CStr(r.Offset(0, BUCKET.duns - 1))) Then
                             
-                            With order_handler
-                                .set_name CStr(r.Offset(0, BUCKET.Supplier_Name - 1)), CStr(r.Offset(0, BUCKET.duns - 1))
-                                .set_info_from_details details
-                                .try_to_add_new_pn CStr(r.Offset(0, BUCKET.pn - 1)), CStr(r.Offset(0, BUCKET.PN_Name - 1)), CLng(r.Offset(0, e - 1))
-                            End With
-                            orders.Add CStr(r.Offset(0, BUCKET.duns - 1)), order_handler
+                                Set order_handler = orders(CStr(r.Offset(0, BUCKET.duns - 1)))
+                                order_handler.try_to_add_new_pn CStr(r.Offset(0, BUCKET.pn - 1)), CStr(r.Offset(0, BUCKET.PN_Name - 1)), CLng(r.Offset(0, e - 1))
+                            Else
+                            
+                                Set order_handler = New OrderHandler
+                                
+                                With order_handler
+                                    .set_name CStr(r.Offset(0, BUCKET.Supplier_Name - 1)), CStr(r.Offset(0, BUCKET.duns - 1))
+                                    .set_info_from_details details
+                                    .try_to_add_new_pn CStr(r.Offset(0, BUCKET.pn - 1)), CStr(r.Offset(0, BUCKET.PN_Name - 1)), CLng(r.Offset(0, e - 1))
+                                End With
+                                orders.Add CStr(r.Offset(0, BUCKET.duns - 1)), order_handler
+                            End If
                         End If
                     End If
                 End If

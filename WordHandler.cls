@@ -56,20 +56,20 @@ Private Sub Class_Terminate()
 End Sub
 
 
-Public Sub assign_new_word_doc(e As E_DOCS)
-
-    Select Case e
-        Case BUCKET.DOC_DEL_CONF
-            ' kopiuj del conf worda
-            tworzenie_nowego_doca
-        Case BUCKET.DOC_GUIDE
-            tworzenie_nowego_doca
-        Case BUCKET.DOC_PART_ORDER_CONF
-            tworzenie_nowego_doca
-        Case Else
-            MsgBox "cos nie tak poszlo"
-    End Select
-End Sub
+'Public Sub assign_new_word_doc(e As E_DOCS)'
+'
+'    Select Case e
+'        Case BUCKET.DOC_DEL_CONF
+'            ' kopiuj del conf worda
+'            tworzenie_nowego_doca
+'        Case BUCKET.DOC_GUIDE
+'            tworzenie_nowego_doca
+'        Case BUCKET.DOC_PART_ORDER_CONF
+'            tworzenie_nowego_doca
+'        Case Else
+'            MsgBox "cos nie tak poszlo"
+'    End Select
+'End Sub
 
 Public Sub connect_shape_with_new_doc(ByRef s As Excel.Shape, e As E_DOCS)
 

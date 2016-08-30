@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} WybierzPlikForm 
    Caption         =   "Wybierz Plik typu Wizard"
-   ClientHeight    =   5175
+   ClientHeight    =   5445
    ClientLeft      =   45
    ClientTop       =   375
    ClientWidth     =   8580
@@ -17,17 +17,17 @@ Attribute VB_Exposed = False
 Private wh As WizardHandler
 
 Private Sub BtnSubmit_Click()
-    inner_run
+    inner_run Me.CheckBoxVisible.Value
 End Sub
 
 Private Sub ListBox1_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    inner_run
+    inner_run Me.CheckBoxVisible.Value
 
 End Sub
 
 
-Private Sub inner_run()
+Private Sub inner_run(work_only_with_visible As Boolean)
 
 
     If Len(CStr(Me.TextBox1)) = 2 Then
@@ -80,7 +80,7 @@ Private Sub inner_run()
                 ee = MRD2_Ordered_QTY
             End If
                 
-            wh.uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie ee, CStr(Me.TextBox1), CStr(Me.TextBoxDUNS)
+            wh.uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie ee, CStr(Me.TextBox1), CStr(Me.TextBoxDUNS), CBool(work_only_with_visible)
         End If
         
         
