@@ -1,5 +1,6 @@
 Attribute VB_Name = "Convert2HTMLModule"
 Public Function fnConvert2HTML(r As Word.Range) As String
+
     Dim bldTagOn, itlTagOn, ulnTagOn, colTagOn As Boolean
     Dim i, chrCount As Integer
     Dim chrCol, chrLastCol, htmlTxt, htmlEnd As String

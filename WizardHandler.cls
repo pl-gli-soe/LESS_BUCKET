@@ -204,55 +204,62 @@ Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_
                         ThisWorkbook.Sheets("info").Shapes.Range(Array("GEN_INFO_2"))
                     ' ----------------------------------------------------------------------------------------------------------------
                     
-                    
-                    DoEvents
-                    .add_node "ship_info_and_new_labels", "div", "sil", "font-size:16px;", CStr(ThisWorkbook.Sheets("info").Range("A5"))
-                    ' SHIP_INFO_NEW_LBLS
-                    .add_node_with_embed_word "ship_info_and_new_labels_s", "div", "sis", "font-size:14px;", _
-                        ThisWorkbook.Sheets("info").Shapes.Range(Array("SHIP_INFO_NEW_LBLS"))
-                    
-                    
-                    DoEvents
-                    .add_node "q_rqms", "div", "qrqms", "font-size:16px;", CStr(ThisWorkbook.Sheets("info").Range("A7"))
-                    ' Q_RQMS
-                    .add_node_with_embed_word "q_rqms_s", "div", "qrqmss", "font-size:14px;", _
-                        ThisWorkbook.Sheets("info").Shapes.Range(Array("Q_RQMS"))
-                    
-                End With
-                
-                Set nh2 = nh
-                With nh2
-                
-                    DoEvents
-                    .add_node "pymnts", "div", "pymnts", "font-size:16px;", CStr(ThisWorkbook.Sheets("info").Range("A9"))
-                    ' PYMNTS
-                    .add_node_with_embed_word "pymnts_s", "div", "pymntss", "font-size:14px;", _
-                        ThisWorkbook.Sheets("info").Shapes.Range(Array("PYMNTS"))
-                    
-                    DoEvents
-                    .add_node "contact_details", "div", "condet", "font-size:16px;", CStr(ThisWorkbook.Sheets("info").Range("A11"))
-                    ' CNT_DETAILS
-                    .add_node_with_embed_word "cd_s", "div", "cds", "font-size:14px;", _
-                        ThisWorkbook.Sheets("info").Shapes.Range(Array("CNT_DETAILS"))
-                    
-                    DoEvents
-                    .add_node "edi_issues", "div", "edii", "font-size:16px;", CStr(ThisWorkbook.Sheets("info").Range("A13"))
-                    ' EDI_ISSUES
-                    .add_node_with_embed_word "ei_s", "div", "ediis", "font-size:14px;", _
-                        ThisWorkbook.Sheets("info").Shapes.Range(Array("EDI_ISSUES"))
-
-                    DoEvents
-                    .add_node "survey", "div", "srvy", "font-size:16px;", CStr(ThisWorkbook.Sheets("info").Range("A15"))
-                    ' SRVY
-                    .add_node_with_embed_word "survey_s", "div", "surveys", "font-size:14px;", _
-                        ThisWorkbook.Sheets("info").Shapes.Range(Array("SRVY"))
-                      
                     DoEvents
                     .add_node "footer", "div", "ftr", "font-size:16px;", CStr(ThisWorkbook.Sheets("info").Range("A17"))
                     ' FTR
                     .add_node_with_embed_word "footer_s", "div", "footers", "font-size:14px;", _
                         ThisWorkbook.Sheets("info").Shapes.Range(Array("FTR"))
+                    
+                    
+
+                    
                 End With
+                
+                'Set nh2 = nh
+                'With nh2
+                    'DoEvents
+                    '.add_node "ship_info_and_new_labels", "div", "sil", "font-size:16px;", CStr(ThisWorkbook.Sheets("info").Range("A5"))
+                    ' SHIP_INFO_NEW_LBLS
+                    '.add_node_with_embed_word "ship_info_and_new_labels_s", "div", "sis", "font-size:14px;", _
+                    '    ThisWorkbook.Sheets("info").Shapes.Range(Array("SHIP_INFO_NEW_LBLS"))
+                    
+                    
+                    'DoEvents
+                    '.add_node "q_rqms", "div", "qrqms", "font-size:16px;", CStr(ThisWorkbook.Sheets("info").Range("A7"))
+                    '' Q_RQMS
+                    '.add_node_with_embed_word "q_rqms_s", "div", "qrqmss", "font-size:14px;", _
+                    '    ThisWorkbook.Sheets("info").Shapes.Range(Array("Q_RQMS"))
+                '
+                '    DoEvents
+                '    .add_node "pymnts", "div", "pymnts", "font-size:16px;", CStr(ThisWorkbook.Sheets("info").Range("A9"))
+                '    ' PYMNTS
+                '    .add_node_with_embed_word "pymnts_s", "div", "pymntss", "font-size:14px;", _
+                '        ThisWorkbook.Sheets("info").Shapes.Range(Array("PYMNTS"))
+                '
+                '    DoEvents
+                '    .add_node "contact_details", "div", "condet", "font-size:16px;", CStr(ThisWorkbook.Sheets("info").Range("A11"))
+                '    ' CNT_DETAILS
+                '    .add_node_with_embed_word "cd_s", "div", "cds", "font-size:14px;", _
+                '        ThisWorkbook.Sheets("info").Shapes.Range(Array("CNT_DETAILS"))
+                '
+                '    DoEvents
+                '    .add_node "edi_issues", "div", "edii", "font-size:16px;", CStr(ThisWorkbook.Sheets("info").Range("A13"))
+                '    ' EDI_ISSUES
+                '    .add_node_with_embed_word "ei_s", "div", "ediis", "font-size:14px;", _
+                '        ThisWorkbook.Sheets("info").Shapes.Range(Array("EDI_ISSUES"))'
+                '
+                '    DoEvents
+                '    .add_node "survey", "div", "srvy", "font-size:16px;", CStr(ThisWorkbook.Sheets("info").Range("A15"))
+                '    ' SRVY
+                '    .add_node_with_embed_word "survey_s", "div", "surveys", "font-size:14px;", _
+                '        ThisWorkbook.Sheets("info").Shapes.Range(Array("SRVY"))
+                '
+                '    DoEvents
+                '    .add_node "footer", "div", "ftr", "font-size:16px;", CStr(ThisWorkbook.Sheets("info").Range("A17"))
+                '    ' FTR
+                '    .add_node_with_embed_word "footer_s", "div", "footers", "font-size:14px;", _
+                '        ThisWorkbook.Sheets("info").Shapes.Range(Array("FTR"))
+                'End With
                 
                 
                 Set oh = New OutlookHandler
@@ -277,7 +284,16 @@ Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_
                 With oh
                     .set_str_to CStr(order_handler.get_name)
                     .set_str_script ""
-                    .set_str_body CStr(nh2.to_string)
+                    
+                    
+                    ' cale text boxy wpadaja tutaj
+                    ' wystarczy od wersji 0.94 jedno nh bez przerzucania danych
+                    ' 2016-08-26
+                    ' ============================================================
+                    ' ============================================================
+                    .set_str_body CStr(nh.to_string)
+                    ' ============================================================
+                    ' ============================================================
                 End With
                 
                 oh.save_html_item

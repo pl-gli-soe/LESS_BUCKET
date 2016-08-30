@@ -96,26 +96,69 @@ End Sub
 Public Sub put_orders_into_excel_worksheet(sh As Worksheet)
 
 
+    sh.Range("B3:B7") = ""
+
+
     sh.Range("TO").Value = CStr(supp_nm)
     sh.Range("SF_DUNS").Value = CStr(duns)
     sh.Range("ORDER_DATE").Value = CStr(data_orderu)
     sh.Range("PROJ").Value = CStr(proj)
     sh.Range("PHASE").Value = CStr(phase)
     sh.Range("MRD").Value = CStr(mrd)
-    sh.Range("PICKUP_DATE").Value = CStr(pickup)
+    sh.Range("PICKUP_DATE").Value = Left(CStr(Format(pickup, "yyyy-mm-dd")), 10)
     
     
-    wiersz = 18
+    make_podpis_na_bazie_ostatniej_textboxa sh.Range("FROM")
+    
+    
+    wiersz = 19
+    
+    
+    ' super byle jak, ale bedzie dzialac na bank
+    ' ---------------------------------------------
+    sh.Range("A19:E10000").Clear
+    ' ---------------------------------------------
+    
     
     For Each xkey In pns_q.Keys
     
-        sh.Cells(wiersz, 1) = wiersz - 17
+        sh.Cells(wiersz, 1) = wiersz - 18
         sh.Cells(wiersz, 2) = xkey
         sh.Cells(wiersz, 3) = pns_nm(xkey)
         sh.Cells(wiersz, 4) = pns_q(xkey)
     
         wiersz = wiersz + 1
     Next xkey
+End Sub
+
+Public Sub make_podpis_na_bazie_ostatniej_textboxa(ByRef r As Range)
+
+    Dim hn As HtmlNode
+    Set hn = New HtmlNode
+    
+    ' FTR
+    'hn.add_node_with_embed_word "footer_s", "div", "footers", "font-size:14px;", _
+    '    ThisWorkbook.Sheets("info").Shapes.Range(Array("FTR"))
+    
+    sig_from_bottom_embed = _
+        hn.parse_to_raw_txt_from_embedobject(ThisWorkbook.Sheets("info").Shapes.Range(Array("FTR")))
+    
+    arr = Split(sig_from_bottom_embed, Chr(10))
+    
+    q = 0
+    For x = LBound(arr) To UBound(arr)
+    
+        ' zabezpieczenie przed wejsciem textu na dalsza czesc formularza
+        ' q < 5
+        If q < 5 Then
+            r.Offset(q, 0) = arr(x)
+        Else
+            Exit For
+        End If
+        
+        q = q + 1
+    Next x
+    
 End Sub
 
 
