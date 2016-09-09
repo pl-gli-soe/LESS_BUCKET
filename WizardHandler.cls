@@ -182,8 +182,9 @@ Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_
                 
                     If cfg.mail_yellow_pic Then
                         DoEvents
-                        .add_node_with_embed_img "yellow_pic", "div", "yp1", "font-size:12px;", _
-                            ThisWorkbook.Sheets(BUCKET.IMG_SH_NM).Shapes.Range(Array("YellowPicture"))
+                        .add_node_with_embed_word "yellow_pic", "center", "yp1", _
+                            "font-size:14px; background-color: #FFC000; width: 80%", _
+                            ThisWorkbook.Sheets(BUCKET.IMG_SH_NM).Shapes.Range(Array("YP"))
 
                     End If
                     
@@ -206,8 +207,10 @@ Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_
                     DoEvents
                     If order_handler.how_many_orders() <= G_LIMIT_ORDEROW_JAKO_TABELA_BEZPOSREDNIO_W_TRESCI_MAILA Then
                         .add_node "tb", "div", "so", "font-size:14px;", CStr(ThisWorkbook.Sheets("info").Range("A3").Offset(1, 1))
+                    
                     Else
                         ' no operation
+                        .add_node "tb", "div", "so", "font-size:14px;", ""
                     End If
                 End If
                 ' =====================================
@@ -283,7 +286,7 @@ Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_
                     If order_handler.how_many_orders() <= G_LIMIT_ORDEROW_JAKO_TABELA_BEZPOSREDNIO_W_TRESCI_MAILA Then
                         .change_node "tb", "div", "so", "font-size:14px;", CStr(tmp_html_txt_for_table)
                     Else
-                        ' no operation
+                        .change_node "tb", "div", "so", "font-size:14px;", ""
                     End If
                     ' =====================================
                     ' =====================================
