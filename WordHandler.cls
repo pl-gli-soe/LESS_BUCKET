@@ -87,8 +87,12 @@ Public Sub connect_shape_with_new_doc(ByRef s As Excel.Shape, e As E_DOCS)
             doc_name = "Final GM Supplier EDI Requirements and EDI Onboarding Guide_2013"
         Case DOC_PART_ORDER_CONF
             doc_name = "PART ORDER CONFIRMATION"
+        Case DOC_PPQP_1_Quality_Warrant_AND_PPQP_2_Corrective_Action_Plan
+            doc_name = "PPQP"
         Case Else
             MsgBox "to nie moze sie pojawic w connect shape"
+        
+        
     End Select
 
     ' Range("U8").Select

@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} WybierzPlikForm 
    Caption         =   "Wybierz Plik typu Wizard"
-   ClientHeight    =   5445
+   ClientHeight    =   7890
    ClientLeft      =   45
    ClientTop       =   375
-   ClientWidth     =   8580
+   ClientWidth     =   10740
    OleObjectBlob   =   "WybierzPlikForm.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -14,20 +14,55 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
+
+Private cfg As InitConfigHandler
 Private wh As WizardHandler
 
+Private Sub BtnBIWLayout_Click()
+    
+    Set cfg = New InitConfigHandler
+    cfg.set_biw
+    cfg.adjust_checkboxes_and_radios Me
+End Sub
+
+Private Sub BtnPSALayout_Click()
+    
+    Set cfg = New InitConfigHandler
+    cfg.set_psa
+    cfg.adjust_checkboxes_and_radios Me
+End Sub
+
+Private Sub BtnStdLayout_Click()
+    Set cfg = New InitConfigHandler
+    cfg.set_stanard
+    
+    cfg.adjust_checkboxes_and_radios Me
+End Sub
+
 Private Sub BtnSubmit_Click()
-    inner_run Me.CheckBoxVisible.Value
+    Set cfg = New InitConfigHandler
+    cfg.adjust_properties Me
+    inner_run Me.CheckBoxVisible.Value, Me.CheckBoxTableOnly.Value, cfg
+End Sub
+
+Private Sub BtnTableOnlyLayout_Click()
+    
+    Set cfg = New InitConfigHandler
+    cfg.set_table_only
+    
+    cfg.adjust_checkboxes_and_radios Me
+    
 End Sub
 
 Private Sub ListBox1_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
-
-    inner_run Me.CheckBoxVisible.Value
+    Set cfg = New InitConfigHandler
+    cfg.adjust_properties Me
+    inner_run Me.CheckBoxVisible.Value, Me.CheckBoxTableOnly.Value, cfg
 
 End Sub
 
 
-Private Sub inner_run(work_only_with_visible As Boolean)
+Private Sub inner_run(work_only_with_visible As Boolean, table_only As Boolean, ByRef mcfg As InitConfigHandler)
 
 
     If Len(CStr(Me.TextBox1)) = 2 Then
@@ -80,7 +115,11 @@ Private Sub inner_run(work_only_with_visible As Boolean)
                 ee = MRD2_Ordered_QTY
             End If
                 
-            wh.uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie ee, CStr(Me.TextBox1), CStr(Me.TextBoxDUNS), CBool(work_only_with_visible)
+            wh.uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie _
+                ee, _
+                CStr(Me.TextBox1), _
+                CStr(Me.TextBoxDUNS), _
+                cfg
         End If
         
         

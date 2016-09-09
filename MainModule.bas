@@ -1,8 +1,15 @@
 Attribute VB_Name = "MainModule"
 Public Sub main()
 
+    Dim cfg As InitConfigHandler
+    Set cfg = New InitConfigHandler
     
     With BUCKET.WybierzPlikForm
+    
+    
+        cfg.set_stanard
+        cfg.adjust_checkboxes_and_radios BUCKET.WybierzPlikForm
+    
         .ListBox1.Clear
         .ComboBox1.Clear
         
