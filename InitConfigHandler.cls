@@ -65,7 +65,7 @@ Public Sub set_biw()
         .att_blue_tag = True
         .att_del_conf = True
         .att_guide = True
-        .att_labels = True
+        .att_labels = False
         .att_material_order = True
         .att_part_order_conf = False
         .att_ppqp_action_plan = True
@@ -123,6 +123,9 @@ Public Sub set_table_only()
         .mail_yellow_pic = False
         .work_with_visible_data = False
         .send_only_table = True
+        
+        .radio_material_order_as_excel = True
+        .radio_material_order_as_html = False
     End With
 End Sub
 

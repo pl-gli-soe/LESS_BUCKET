@@ -129,7 +129,59 @@ Public Sub put_orders_into_excel_worksheet(sh As Worksheet)
     
         wiersz = wiersz + 1
     Next xkey
+    
+    If wiersz > 19 Then
+        thinlines sh.Range("A19:D" & CStr(wiersz - 1))
+    End If
 End Sub
+
+
+Private Sub thinlines(r As Range)
+'
+' thinlines Macro
+'
+
+'
+    r.Borders(xlDiagonalDown).LineStyle = xlNone
+    r.Borders(xlDiagonalUp).LineStyle = xlNone
+    With r.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With r.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With r.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With r.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With r.Borders(xlInsideVertical)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With r.Borders(xlInsideHorizontal)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+End Sub
+
 
 Public Sub make_podpis_na_bazie_ostatniej_textboxa(ByRef r As Range)
 
@@ -163,7 +215,7 @@ End Sub
 
 
 Public Function get_name() As String
-    get_name = "DUNS #: " & CStr(duns) & ", Supplier Name: " & CStr(supp_nm)
+    get_name = CStr(supp_nm) & " " & CStr(duns)
 End Function
 
 
