@@ -80,4 +80,5 @@ Public Enum E_DOCS
     DOC_GUIDE = 1
     DOC_DEL_CONF
     DOC_PART_ORDER_CONF
+    DOC_PPQP_1_Quality_Warrant_AND_PPQP_2_Corrective_Action_Plan
 End Enum

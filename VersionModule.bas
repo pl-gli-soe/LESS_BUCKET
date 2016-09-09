@@ -1,4 +1,24 @@
 Attribute VB_Name = "VersionModule"
+
+' 2016-09-09 0.98
+' ===========================================================================================
+' 18 milestone
+' rozszerzenie kompetencji narzedzia na generowanie maili dopasowanych do typu proj:
+' Major / MY
+' PSA , BIW itd.
+' przez co zostal rozszerzony formularz wyboru i co za tym idzie maile moge byc bardziej
+' dostosowane do ukladu
+' narazie obrazek do maila mnie pokonal (wiec schowalem arkusz z nim)
+' ale jeszcze do tego wroce
+' ===========================================================================================
+
+' 2016-08-30 0.97
+' ===========================================================================================
+' 17 milestone
+' - dodanie mozliwosci generowania samej tabeli
+' - pojedynczy generowanie tresci - po co za kazdym razem to samo
+' ===========================================================================================
+
 ' 2016-08-30 0.96
 ' ===========================================================================================
 ' 16 milestone - work only with visible data

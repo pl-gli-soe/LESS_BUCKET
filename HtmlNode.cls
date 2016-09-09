@@ -20,6 +20,14 @@ Private pre As String
 Private post As String
 
 
+Private uniq_id As String
+
+
+Public Function get_uniq_id() As String
+    get_uniq_id = uniq_id
+End Function
+
+
 Public Sub init_with_embed_word(nm As String, m As String, Optional ajdi As String, Optional stajl As String, Optional body As Object)
 
     name = nm
@@ -46,6 +54,77 @@ Public Sub init_with_embed_word(nm As String, m As String, Optional ajdi As Stri
         str_body = CStr(tmp)
     End If
 End Sub
+
+Public Sub init_with_embed_img(nm As String, m As String, Optional ajdi As String, Optional stajl As String, Optional body As Object)
+    name = nm
+    If Len(m) > 0 Then
+    
+    
+        ' tutaj bardzo wazne styl nie moze zostac uruchomiony bez przypisania id
+        If Len(ajdi) > 0 Then
+            pre = "<" & CStr(m) & _
+                " id=" & Chr(34) & CStr(ajdi) & Chr(34) & _
+                " style=" & Chr(34) & CStr(stajl) & Chr(34) & " > "
+        Else
+            pre = "<" & CStr(m) & ">"
+        End If
+        post = "</" & CStr(m) & ">"
+    Else
+        pre = ""
+        post = ""
+    End If
+    
+    
+    tmp = CStr(img_embedobject(body))
+    If Len(tmp) > 0 Then
+        str_body = CStr(tmp)
+    End If
+End Sub
+
+
+Public Function img_embedobject(Optional b As Object) As String
+    img_embedobject = ""
+    
+    If Not IsMissing(b) Then
+        
+        ' sekcja sciagania textu z obiektu embed
+        ' ======================================
+        ''
+        '
+        
+        ' ok teraz by trzeba bylo znalezc mozliwosc wyciagniecia textu z tego obiektu
+        ' -----------------------------------------------------------------------------
+        Dim ss As Excel.Shapes
+        Dim sr As Excel.ShapeRange
+        Dim s As Excel.Shape
+        
+        ' Debug.Print TypeName(b) ' ShapeRange
+        Set sr = b
+        ' Debug.Print sr.AutoShapeType ' -2
+        If sr.Type = msoPicture Then
+            ' Debug.Print "this is mso embed ole object" ' true
+            ' ==================================================
+            ''
+            '
+            
+            Set s = sr.Item(1)
+            ' a mogloby byc tak pieknie gdyby to ponizsze dzialalo od razu....
+            ' s.SaveAsPicture "img.jpg"
+            ' s.Select
+            '
+            'Selection.Export "i.jpg"
+            ' Dim p As Picture
+            
+            
+            
+            
+            
+            img_embedobject = ""
+            
+            
+        End If
+    End If
+End Function
 
 Public Function parse_to_txt_from_embedobject(Optional b As Object) As String
     parse_to_txt_from_embedobject = ""
@@ -299,6 +378,9 @@ End Function
 
 Public Sub init(nm As String, m As String, Optional ajdi As String, Optional stajl As String, Optional body As String)
 
+
+    uniq_id = ajdi
+
     name = nm
     If Len(m) > 0 Then
     
@@ -338,13 +420,46 @@ Public Sub add_node(nm As String, m As String, Optional ajdi As String, Optional
     inner_add_node n
 End Sub
 
+
+Public Sub change_node(nm As String, m As String, Optional ajdi As String, Optional stajl As String, Optional body As String)
+    Set n = New HtmlNode
+    n.init nm, m, ajdi, stajl, body
+    inner_change_node n
+End Sub
+
 Public Sub add_node_with_embed_word(nm As String, m As String, Optional ajdi As String, Optional stajl As String, Optional body As Object)
     Set n = New HtmlNode
     n.init_with_embed_word nm, m, ajdi, stajl, body
     inner_nodes.Add n
 End Sub
 
+Public Sub add_node_with_embed_img(nm As String, m As String, Optional ajdi As String, Optional stajl As String, Optional body As Object)
+    Set n = New HtmlNode
+    n.init_with_embed_img nm, m, ajdi, stajl, body
+    inner_nodes.Add n
+End Sub
 
+Private Sub inner_change_node(n As HtmlNode)
+
+    Dim inode As HtmlNode
+    Dim tmp_coll As Collection
+    Set tmp_coll = inner_nodes
+    
+    
+    Set inner_nodes = Nothing
+    Set inner_nodes = New Collection
+    
+    For Each inode In tmp_coll
+    
+        If CStr(inode.get_uniq_id) = CStr(n.get_uniq_id) Then
+            inner_nodes.Add n
+        Else
+            inner_nodes.Add inode
+        End If
+    Next inode
+    
+    
+End Sub
 
 Private Sub inner_add_node(n As HtmlNode)
 
