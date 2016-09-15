@@ -21,6 +21,8 @@ Global Const MATERIAL_ORDER_SH_NAME = "material order"
 
 Global Const REGISTER_SH_NM = "register"
 
+Global Const FIRST_LINE_IN_BUCKET_REPORT = "Gratulacje! Wygenerowales wlasnie ordery do draftow za pomoca narzedzia bucket, oto Twoj raport: "
+
 
 ' new sheets
 Global Const IMG_SH_NM = "IMG"

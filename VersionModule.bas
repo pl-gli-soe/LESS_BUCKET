@@ -1,5 +1,11 @@
 Attribute VB_Name = "VersionModule"
 
+' 2016-09-09 1.00
+' ===========================================================================================
+' pierwsze udane testy jesli chodzi o generowanie maili jednak ich ilosc jest przytlaczajaca
+' i dobrze by bylo sprawdzic czy ilosci jakie zostale wygenerowane sa zgodne z tym co jest w
+' wyparowanym Wizardzie
+' ===========================================================================================
 ' 2016-09-09 0.99
 ' ===========================================================================================
 ' 19 milestone

@@ -484,7 +484,7 @@ Public Function to_string() As String
     
     tmp = CStr(pre) & _
         str_body & _
-        get_string_from_collection() & CStr(post) & "<br/>"
+        get_string_from_collection() & CStr(post)
     
     to_string = CStr(tmp)
 End Function
@@ -520,4 +520,27 @@ Private Function special_get_string_from_collection() As String
             special_get_string_from_collection = special_get_string_from_collection & nodeItem.to_string & Chr(10)
         Next nodeItem
     End If
+End Function
+
+
+Public Function get_table_from_dictionary(d As Dictionary) As String
+    Dim t As String
+    
+    t = "<table style=" & Chr(34) & "font-size: 10px;" & Chr(34) & ">" & Chr(10)
+    
+    
+    x = 1
+    For Each k In d.Keys
+    
+        t = t & "<tr style=" & Chr(34) & "border: 1px solid black; text-align: left;" & Chr(34) & ">" & Chr(10)
+        t = t & "<th style=" & Chr(34) & "border: 1px solid black; padding: 1px;" & Chr(34) & ">" & CStr(x) & ". " & CStr(k) & "</th>" & Chr(10)
+        t = t & "</tr>" & Chr(10)
+        
+        x = x + 1
+    Next k
+    
+    t = t & "</table>" & Chr(10)
+    
+    
+    get_table_from_dictionary = t
 End Function

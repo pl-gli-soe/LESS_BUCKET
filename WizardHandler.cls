@@ -18,6 +18,7 @@ Private details As Worksheet
 
 Private type_of_action As E_ACTION_TYPE
 
+Private feedback_handler As FeedbackHandler
 
 Private oh As OutlookHandler
 Private oh_template As OutlookHandler
@@ -49,6 +50,9 @@ Private Sub Class_Initialize()
     Set oh = New OutlookHandler
     Set oh_template = Nothing
     Set orders = New Dictionary
+    
+    
+    Set feedback_handler = New FeedbackHandler
 End Sub
 
 
@@ -330,6 +334,15 @@ Public Sub uruchom_dla_danych_funkcjonalnosc_w_wybranym_wizardzie(e As E_MASTER_
             
             
             reassign_txt_on_info_sheet
+            
+            With feedback_handler
+                .collect_info_about_proxy_orders_collection_of_objects orders
+                .collect_info_from_wizard_master_sh master
+                
+                .generate_mail_report_at_the_end orders
+            End With
+            
+            
     
             ThisWorkbook.Sheets(BUCKET.INFO_SH_NAME).Activate
             MsgBox "done!"
@@ -367,4 +380,11 @@ Private Sub work_with(ByRef ra3 As Range, ByRef orderh As OrderHandler)
     With orderh
         .put_orders_into_excel_worksheet ThisWorkbook.Sheets(BUCKET.MATERIAL_ORDER_SH_NAME)
     End With
+End Sub
+
+Private Sub Class_Terminate()
+    Set feedback_handler = Nothing
+    Set oh = Nothing
+    Set oh_template = Nothing
+    Set orders = Nothing
 End Sub
