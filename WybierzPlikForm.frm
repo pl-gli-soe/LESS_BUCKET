@@ -128,4 +128,3 @@ Private Sub inner_run(work_only_with_visible As Boolean, table_only As Boolean, 
         MsgBox "dla kogo chcesz zrobic ordery?"
     End If
 End Sub
-
